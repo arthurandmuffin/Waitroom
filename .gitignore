@@ -1,3 +1,14 @@
-__pycache__
+# Ignore Python cache files
+__pycache__/
+*.pyc
+
+# Virtual environment
+venv/
+
+# Environment variables
+.env
+
+
+requirements.txt
 Waitroom/__pycache__
 api/__pycache__
