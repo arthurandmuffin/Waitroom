@@ -54,7 +54,7 @@ ROOT_URLCONF = 'Waitroom.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [BASE_DIR / 'Waitroom/templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
