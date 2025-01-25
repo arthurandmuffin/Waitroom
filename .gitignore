@@ -10,3 +10,5 @@ venv/
 
 
 requirements.txt
+Waitroom/__pycache__
+api/__pycache__
