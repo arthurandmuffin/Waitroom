@@ -22,6 +22,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', home, name='home'),  # Home page
     path('add/', home, name='add_patient'),  # Add patient page
-    path('missing/', home, name='missing_patient'),  # Mark as missing page
+    path('check-in/', home, name='check_patient_in'),  # Updated URL
     path('remove/', home, name='remove_patient'),  # Remove patient page
 ]
