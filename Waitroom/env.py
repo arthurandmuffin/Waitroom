@@ -1,0 +1,1 @@
+WaitingRoomBuffer = 60

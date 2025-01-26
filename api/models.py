@@ -13,13 +13,14 @@ class Patient(models.Model):
             ('Awaiting Tests', 'Awaiting Tests'),
             ('MIA', 'MIA')
         ],
-        default='Triaged'  # Default can be any value from the choices
+        default='Triaged'
     )
 
 class Triage(models.Model):
     patientID = models.CharField(max_length=255)
     condition = models.TextField()
     triageCategory = models.IntegerField(choices=[(i, i) for i in range(1, 6)])
+    present = models.BooleanField(default=True)
     arrivalTime = models.DateTimeField()
     estimatedTreatmentTime = models.IntegerField(validators=[MinValueValidator(1)])
     
@@ -43,6 +44,7 @@ class MissingPatient(models.Model):
 class ProcessPatient(models.Model):
     patientID = models.CharField(max_length=255)
     roomNumber = models.IntegerField(validators=[MinValueValidator(1)])
+    triageCategory = models.IntegerField(choices=[(i, i) for i in range(1, 6)])
     startTime = models.DateTimeField()
     estimatedEndTime = models.DateTimeField()
     
@@ -53,4 +55,4 @@ class Pending(models.Model):
     
 class PendingPatient(models.Model):
     patientID = models.CharField(max_length=255)
-    status = models.ForeignKey(Pending, on_delete=models.CASCADE)
+    pending = models.ForeignKey(Pending, on_delete=models.CASCADE)
