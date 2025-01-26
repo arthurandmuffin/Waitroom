@@ -1,5 +1,6 @@
 {
-    "id": "",
-    "physician_id": "",
-    "admission_reason": ""
+    "patientID": "",
+    "physicianID": "",
+    "admissionReason": "",
+    "ward": 1
 }
