@@ -11,5 +11,8 @@ urlpatterns = [
     path('pending-patient/', views.pending_patient, name='pending_patient'),
     path('test-ready-patient/', views.test_ready_patient, name='test_ready_patient'),
     
-    path('all-active-triages')
+    path('all-active-triages', views.all_active_triages, name='all_active_triages'),
+    path('all-present-triages', views.all_present_triages, name='all_present_triages'),
+    path('all-processing-patients', views.all_processing_patients, name="all_processing_patients"),
+    path('patients-to-notify', views.patients_to_notify, name='patients_to_notify')
 ]
