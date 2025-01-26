@@ -20,7 +20,8 @@ from reservations.views import home
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('api/', include('api.urls')),
-    path('reservations/', include('reservations.urls')),
-    path('', home, name='home'),  # Serve reservations view at root
+    path('', home, name='home'),  # Home page
+    path('add/', home, name='add_patient'),  # Add patient page
+    path('missing/', home, name='missing_patient'),  # Mark as missing page
+    path('remove/', home, name='remove_patient'),  # Remove patient page
 ]
