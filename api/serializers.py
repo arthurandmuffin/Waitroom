@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Patient, Triage, Admitted, MissingPatient, Pending, PendingPatient
+from .models import Patient, Triage, Admitted, MissingPatient, ProcessPatient, Pending, PendingPatient
 
 class PatientSerializer(serializers.ModelSerializer):
     class Meta:
@@ -20,6 +20,11 @@ class MissingPatientSerializer(serializers.ModelSerializer):
     class Meta:
         model = MissingPatient
         fields = ['patientID', 'condition', 'triageCategory', 'arrivalTime', 'estimatedTreatmentTime']
+        
+class ProcessPatientSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ProcessPatient
+        fields = ['patientID', 'roomNumber', 'triageCategory', 'startTime', 'estimatedEndTime']
         
 class PendingSerializer(serializers.ModelSerializer):
     class Meta:

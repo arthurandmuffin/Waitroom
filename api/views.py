@@ -4,8 +4,9 @@ from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from .models import Patient, Triage, Admitted, MissingPatient, ProcessPatient, Pending, PendingPatient
-from .serializers import PatientSerializer, TriageSerializer, AdmittedSerializer, MissingPatientSerializer, PendingSerializer, PendingPatientSerializer
+from .serializers import PatientSerializer, TriageSerializer, AdmittedSerializer, MissingPatientSerializer, ProcessPatientSerializer ,PendingSerializer, PendingPatientSerializer
 from datetime import timedelta
+from .signals import TriagesToNotify
 
 @api_view(['POST'])
 def create_triage(request):
@@ -177,3 +178,39 @@ def test_ready_patient(request):
         except ProcessPatient.DoesNotExist:
             return Response({"error": "ProcessPatient record not found."}, status=status.HTTP_401_UNAUTHORIZED)
         return Response(status=status.HTTP_201_CREATED)
+    
+@api_view(['GET'])
+def all_active_triages(request):
+    try:
+        activeTriages = Triage.objects.order_by('triageCategory', 'arrivalTime')
+        serializer = TriageSerializer(activeTriages, many=True)
+        return Response(serializer.data)
+    except Triage.DoesNotExist:
+        return Response(None)
+
+@api_view(['GET'])
+def all_present_triages(request):
+    try:
+        presentTriages = Triage.objects.filter(present=True).order_by('triageCategory', 'arrivalTime')
+        serializer = TriageSerializer(presentTriages, many=True)
+        return Response(serializer.data)
+    except Triage.DoesNotExist:
+        return Response(None)
+
+@api_view(['GET'])
+def all_processing_patients(request):
+    try:
+        processingPatients = ProcessPatient.objects.order_by('roomNumber')
+        serializer = ProcessPatientSerializer(processingPatients, many=True)
+        return Response(serializer.data)
+    except ProcessPatient.DoesNotExist:
+        return Response(None)
+    
+@api_view(['GET'])
+def patients_to_notify(request):
+    try:
+        patientsToNotify = TriagesToNotify()
+        serializer = TriageSerializer(patientsToNotify)
+        return Response(serializer.data)
+    except Triage.DoesNotExist:
+        return Response(None)

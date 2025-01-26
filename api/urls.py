@@ -10,4 +10,6 @@ urlpatterns = [
     path('discharge-patient/', views.discharge_patient, name='discharge_patient'),
     path('pending-patient/', views.pending_patient, name='pending_patient'),
     path('test-ready-patient/', views.test_ready_patient, name='test_ready_patient'),
+    
+    path('all-active-triages')
 ]

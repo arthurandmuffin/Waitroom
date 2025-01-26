@@ -6,6 +6,10 @@ from ..Waitroom.env import WaitingRoomBuffer
 
 @receiver(post_save, sender=Triage)
 def newTriage(sender, instance, created, **kwargs):
+    triagesToNotify = TriagesToNotify()
+    #Have list of patient to notify, connect to hospital SMS infrastructure, auto update everytime database is updated
+    
+def TriagesToNotify():
     presentTriages = Triage.objects.filter(present=True).order_by('triageCategory', 'arrivalTime')
     totalTreatmentTime = presentTriages.aggregate(Sum('estimatedTreatmentTime'))['estimatedTreatmentTime__sum']
     totalTreatmentTime = totalTreatmentTime or 0
@@ -15,5 +19,4 @@ def newTriage(sender, instance, created, **kwargs):
     if totalTreatmentTime < WaitingRoomBuffer and nonpresentTriages.exists():
         highestPriority = nonpresentTriages.first()
         triagesToNotify.append(highestPriority)
-    #Have list of patient to notify, connect to hospital SMS infrastructure
-    
+    return triagesToNotify
