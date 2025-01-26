@@ -9,7 +9,7 @@ class PatientSerializer(serializers.ModelSerializer):
 class TriageSerializer(serializers.ModelSerializer):
     class Meta:
         model = Triage
-        fields = ['patientID', 'condition', 'triageCategory', 'arrivalTime', 'estimatedTreatmentTime']
+        fields = ['patientID', 'condition', 'triageCategory', 'present', 'arrivalTime', 'estimatedTreatmentTime']
         
 class AdmittedSerializer(serializers.ModelSerializer):
     class Meta:
@@ -27,8 +27,13 @@ class PendingSerializer(serializers.ModelSerializer):
         fields = ['lab', 'imaging', 'referral']
         
 class PendingPatientSerializer(serializers.ModelSerializer):
-    pending = PendingSerializer()  # This will serialize the nested 'status' object
-
+    pending = PendingSerializer()
     class Meta:
         model = PendingPatient
         fields = ['patientID', 'pending']
+        
+    def create(self, validated_data):
+        pending_data = validated_data.pop('pending')
+        pending_instance = Pending.objects.create(**pending_data)
+        pending_patient = PendingPatient.objects.create(pending=pending_instance, **validated_data)
+        return pending_patient

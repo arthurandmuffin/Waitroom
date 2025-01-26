@@ -2,5 +2,6 @@
     "patientID": "",
     "condition": "",
     "triageCategory": 5,
+    "present": false,
     "estimatedTreatmentTime": 10
 }
