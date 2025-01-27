@@ -5,15 +5,25 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
 </head>
 <body>
-    <div class="container mt-5">
+    <div class="container mt-5 text-center">
         <h2>Check Patient In</h2>
+        <p>Enter the Patient ID to check them in.</p>
+
         <form method="post">
+            {% csrf_token %}
             <div class="mb-3">
                 <label for="patientID" class="form-label">Patient ID:</label>
-                <input type="text" id="patientID" class="form-control" placeholder="Enter Patient ID" required>
+                <input type="text" id="patientID" name="patientID" class="form-control" placeholder="Enter Patient ID" required>
             </div>
             <button type="submit" class="btn btn-success">Check In</button>
         </form>
+
+        {% if checked_in %}
+        <div class="alert alert-success mt-3" role="alert">
+            Patient successfully checked in!
+        </div>
+        <a href="{% url 'home' %}" class="btn btn-primary mt-2">Back to Home</a>
+        {% endif %}
     </div>
 </body>
 </html>

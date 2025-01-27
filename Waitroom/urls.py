@@ -16,12 +16,13 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from reservations.views import home
+from reservations.views import home, check_patient_in
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', home, name='home'),  # Home page
     path('add/', home, name='add_patient'),  # Add patient page
-    path('check-in/', home, name='check_patient_in'),  # Updated URL
+    path('check-in/', check_patient_in, name='check_patient_in'),  # Corrected URL
     path('remove/', home, name='remove_patient'),  # Remove patient page
+    path('', include('reservations.urls')),
 ]
